@@ -1,0 +1,252 @@
+/* ========================================
+   FLIPBOOK 3D - STYLES RÉALISTES
+   ======================================== */
+
+/* Variables globales */
+:root {
+  --page-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+  --page-glow: 0 0 40px rgba(34, 211, 238, 0.4);
+  --transition-smooth: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ========================================
+   STYLES POUR HTMLFLIPBOOK
+   ======================================== */
+
+/* Conteneurs des différents modes */
+.flip3d-container,
+.magazine-container,
+.book-container,
+.notebook-container,
+.cards-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Style de base pour toutes les pages */
+.page-flip3d,
+.page-magazine,
+.page-book,
+.page-notebook,
+.page-cards {
+  position: relative;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== FLIP 3D - Classique ========== */
+.flipbook-shadow {
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(34, 211, 238, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.page-flip3d {
+  border-radius: 4px;
+}
+
+/* ========== MAGAZINE - Double page ========== */
+.flipbook-magazine {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.page-magazine {
+  background: #ffffff;
+}
+
+/* ========== LIVRE - Avec épine ========== */
+.book-spine {
+  border-radius: 4px 0 0 4px;
+  flex-shrink: 0;
+}
+
+.flipbook-book {
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.page-book {
+  background: #fefefe;
+}
+
+/* ========== CARNET - Avec spirale ========== */
+.flipbook-notebook {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.page-notebook {
+  background: #ffffff;
+  position: relative;
+}
+
+/* ========== CARTES - Bordure gradient ========== */
+.flipbook-cards {
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.page-cards {
+  background: transparent;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+/* ========================================
+   SCROLLBAR PERSONNALISÉ
+   ======================================== */
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: rgba(30, 41, 59, 0.3);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgb(34, 211, 238), rgb(168, 85, 247));
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, rgb(6, 182, 212), rgb(147, 51, 234));
+}
+
+/* ========================================
+   COVERFLOW
+   ======================================== */
+
+.coverflow-container {
+  perspective: 2500px;
+  perspective-origin: center center;
+  transform-style: preserve-3d;
+}
+
+.coverflow-item {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: all 0.5s var(--transition-smooth);
+}
+
+/* ========================================
+   SLIDESHOW - ANIMATION PULSE
+   ======================================== */
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.8),
+      0 0 30px rgba(34, 211, 238, 0.3);
+  }
+  50% {
+    box-shadow: 
+      0 30px 60px rgba(0, 0, 0, 0.9),
+      0 0 60px rgba(34, 211, 238, 0.6);
+  }
+}
+
+.slideshow-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+
+@media (max-width: 640px) {
+  .flipbook-shadow,
+  .flipbook-magazine,
+  .flipbook-book,
+  .flipbook-notebook,
+  .flipbook-cards {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+  
+  .book-spine {
+    width: 16px !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .book-spine {
+    width: 20px !important;
+  }
+}
+
+/* ========================================
+   PERFORMANCE OPTIMIZATIONS
+   ======================================== */
+
+.page-flip3d,
+.page-magazine,
+.page-book,
+.page-notebook,
+.page-cards {
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+
+/* Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* ========================================
+   MOBILE TOUCH IMPROVEMENTS
+   ======================================== */
+
+@media (hover: none) and (pointer: coarse) {
+  .flipbook-shadow,
+  .flipbook-magazine,
+  .flipbook-book,
+  .flipbook-notebook,
+  .flipbook-cards {
+    touch-action: pan-y;
+  }
+}
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+.flipbook-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.9);
+  color: rgba(34, 211, 238, 0.8);
+  font-size: 1.2rem;
+}
