@@ -1,0 +1,115 @@
+{
+  "name": "Flipbook",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string",
+      "description": "Titre du flipbook"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description du flipbook"
+    },
+    "pdf_url": {
+      "type": "string",
+      "description": "URL du PDF original"
+    },
+    "cover_image": {
+      "type": "string",
+      "description": "Image de couverture"
+    },
+    "page_images": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URLs des images de chaque page"
+    },
+    "page_count": {
+      "type": "number",
+      "description": "Nombre de pages"
+    },
+    "overlays": {
+      "type": "array",
+      "description": "Widgets positionn\u00e9s sur les pages",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "page": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string"
+          },
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          },
+          "width": {
+            "type": "number"
+          },
+          "height": {
+            "type": "number"
+          },
+          "config": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "toc": {
+      "type": "array",
+      "description": "Table des mati\u00e8res g\u00e9n\u00e9r\u00e9e par IA",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "page": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "seo_description": {
+      "type": "string",
+      "description": "Description SEO g\u00e9n\u00e9r\u00e9e par IA"
+    },
+    "extracted_text": {
+      "type": "string",
+      "description": "Texte extrait du PDF pour le chat IA"
+    },
+    "is_public": {
+      "type": "boolean",
+      "default": false,
+      "description": "Flipbook public ou priv\u00e9"
+    },
+    "views": {
+      "type": "number",
+      "default": 0,
+      "description": "Nombre de vues"
+    },
+    "aspect_ratio": {
+      "type": "number",
+      "description": "Ratio largeur/hauteur des pages"
+    },
+    "theme": {
+      "type": "string",
+      "enum": [
+        "light",
+        "dark",
+        "auto"
+      ],
+      "default": "dark"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}
