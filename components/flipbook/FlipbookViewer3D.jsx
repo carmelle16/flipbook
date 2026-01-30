@@ -15,6 +15,7 @@ export default function FlipbookViewer3D({ pages = [], title = 'Flipbook', overl
   const [currentPage, setCurrentPage] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [zoom, setZoom] = useState(1);
+  const soundEnabledModes = ['flip3d', 'book', 'magazine', 'notebook'];
   const [viewMode, setViewMode] = useState('flip3d');
   const [autoPlay, setAutoPlay] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(true);
@@ -34,7 +35,7 @@ export default function FlipbookViewer3D({ pages = [], title = 'Flipbook', overl
 
   // Fonction pour jouer le son de flip
   const playFlipSound = () => {
-    if (!soundEnabled) return;
+    if (!soundEnabled || !soundEnabledModes.includes(viewMode)) return;
     
     try {
       if (audioRef.current) {
@@ -278,20 +279,21 @@ export default function FlipbookViewer3D({ pages = [], title = 'Flipbook', overl
           </Button>
           
           {/* Bouton Son */}
-          <Button
-            size="icon"
-            variant="ghost"
-            onClick={() => setSoundEnabled(!soundEnabled)}
-            className={`text-slate-400 transition-colors w-8 h-8 sm:w-10 sm:h-10 ${soundEnabled ? 'text-cyan-400 bg-cyan-500/20' : 'hover:text-white'}`}
-            title={soundEnabled ? 'Son activé' : 'Son désactivé'}
-          >
-            {soundEnabled ? (
-              <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
-            ) : (
-              <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
-            )}
-          </Button>
-          
+          {soundEnableModes.includes(viewMode) && (
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => setSoundEnabled(!soundEnabled)}
+              className={`text-slate-400 transition-colors w-8 h-8 sm:w-10 sm:h-10 ${soundEnabled ? 'text-cyan-400 bg-cyan-500/20' : 'hover:text-white'}`}
+              title={soundEnabled ? 'Son activé' : 'Son désactivé'}
+            >
+              {soundEnabled ? (
+                <Volume2 className="w-4 h-4 sm:w-5 sm:h-5" />
+              ) : (
+                <VolumeX className="w-4 h-4 sm:w-5 sm:h-5" />
+              )}
+            </Button>
+          )}
           <Button
             size="icon"
             variant="ghost"
@@ -582,8 +584,7 @@ export default function FlipbookViewer3D({ pages = [], title = 'Flipbook', overl
                   <motion.div
                     key={idx}
                     className="cursor-pointer absolute"
-                    onClick={() => {
-                      playFlipSound();
+                    onClick={() => 
                       setCurrentPage(idx);
                     }}
                     animate={{
@@ -676,7 +677,6 @@ export default function FlipbookViewer3D({ pages = [], title = 'Flipbook', overl
                       : 'hover:shadow-2xl'
                   }`}
                   onClick={() => {
-                    playFlipSound();
                     setCurrentPage(idx);
                   }}
                   whileHover={{ scale: 1.1, zIndex: 10 }}
